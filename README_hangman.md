@@ -38,4 +38,14 @@ which was made for the edX 6.00 course that I am taking.
     Have done both a clone of a repo and the branch of the master 
     but I cant seem to figure out how it works other then making a new file
     and then not leetting me merge it back in
-    OR at least I cannot figur it out
+    OR at least I cannot figure it out
+    
+    
+Jan 30 2015
+
+## Made the switch to python v 3.4!
+
+* This is my first successful attempt to convert one of my running v2 script
+  to v3 script. And I have also made to different branches so that I can 
+  keep working on and using python 2.7 for now. That is until the rest of the 
+  world hops on board.
