@@ -21,5 +21,15 @@ card_in_hand() will check to see if the value of the card the user has selected
 is currently in their hand. This is really just a validation so the user is 
 playing by the rules.
 
+made transfer_cards() and update_hand() which are mirror of each other. Where 
+one will get the card from a given hand and make a list out of them to transfer,
+in my case I reassign the hand to the hand + what is being transferred. I had to
+so that my check_in_hand() function works. I noticed during my initial testing
+that is I simply append to the original hand the check_in_hand() function does
+not pick up on the appended cards.
+
+The update_hand() just returns a new hand with the cards that were transferred 
+removed, or just not being creating in the new hand(list)
+
 
 

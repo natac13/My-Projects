@@ -50,6 +50,22 @@ def card_in_hand(v, hand):
             return True
     return False
         
+def transfer_cards(cardvalue, hand):
+    ''' 
+    cardvalue is a str representation of the value of the card in question
+    hand will contain at least one card matching the value
     
+    return: list of card(s)(tuples) which are removed from the hand
+    '''
     
+    return [card for card in hand if card[0] == cardvalue]
+    
+def update_hand(cardvalue, hand):
+    '''
+    cardvalue is a str representation of the value of the card in question
+    hand will contain at least one card matching the value
+    
+    return: list of card(s)(tuples) where transffered card are removed
+    '''
+    return [card for card in hand if card[0] != cardvalue]
     
