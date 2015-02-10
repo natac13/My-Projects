@@ -1,5 +1,5 @@
 # Import math was to use ceil
-from __future__ import division
+
 import math
 from sys import argv
 
@@ -44,10 +44,10 @@ def min_wire_ampacity(wattage, voltage, phase):
 		
 	ampacity_rounded = round(amp, 2)
 	demand_totals['min_ampacity'] = ampacity_rounded
-	print demand_totals
-	print "The total unit demand is:",demand_totals['total_suit'],"Watts",
-	print "and the subtotal is:", demand_totals['subtotal'], "Watts"
-	print "The minimum wire and panel ampacity is: %r Amps" % ampacity_rounded
+	print(demand_totals)
+	print("The total unit demand is:",demand_totals['total_suit'],"Watts", end=' ')
+	print("and the subtotal is:", demand_totals['subtotal'], "Watts")
+	print("The minimum wire and panel ampacity is: %r Amps" % ampacity_rounded)
 
 
 def suit_total_demand():
@@ -76,7 +76,7 @@ def heat_ac(heat, ac):
 	
 def subtotal ():
 	subtotal = 0.0
-	for k, v in demand_totals.items():
+	for k, v in list(demand_totals.items()):
 		subtotal = subtotal + v
 	# print "Your subtotal is:", subtotal,"Watts"
 	demand_totals['subtotal'] = subtotal

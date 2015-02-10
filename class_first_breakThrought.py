@@ -15,7 +15,7 @@ class Song(object):
         
     def sing(self):
        for x in self.lyrics:
-           print x
+           print(x)
            
 happy_bday = Song(["Happy birthday to you",
                    "I dont want to get sued",
@@ -43,10 +43,10 @@ class Employee:
 
 
     def count(self):
-        print "Total employee {0:d}".format(Employee.empcount)
+        print("Total employee {0:d}".format(Employee.empcount))
     
     def display(self):
-        print "Name is: {0}".format(self.name)
+        print("Name is: {0}".format(self.name))
 
     def life(self):
         # then written like so means look at the object's scope
@@ -57,7 +57,7 @@ emp1 = Employee('rob')
 emp2 = Employee('joanna')
 emp1.display()
 emp2.display()
-print Employee.empcount
+print(Employee.empcount)
 
 # so I can modify each objects x value since when life() is called it
 # looks at the variables value from the objects scope

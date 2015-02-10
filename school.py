@@ -86,20 +86,20 @@ def parking_demand(parking_stalls, restricted):
 ### After taking the other loads off the dict I then iterate over the rest and add them up #####
 def other_loads():
 	sum = 0
-	for k, v in entity_demands.items():
+	for k, v in list(entity_demands.items()):
 		sum += int(v)
 	sub['other'] = sum
 	
 def per_square_meter(total, x_meters):
 	watt_per_square = round(total / x_meters, 2)
-	print watt_per_square,"Watts/meter"
+	print("{0} Watts/meter".format(watt_per_square))
 	return watt_per_square
 	
 def subtotal():
 	amount = 0
-	for k, v in sub.items():
+	for k, v in list(sub.items()):
 		amount += v
-	print "Subtotal: %r Watts" % amount
+	print("Subtotal: %r Watts" % amount)
 	return amount
 		
 
@@ -112,7 +112,7 @@ def calculated_wattage(wms, ad, heating):
 		wattage_calculated_a = round((wms * 900) * 0.75, 2)
 		wattage_calculated_b = round((wms * (ad - 900)) * 0.50,)
 		wattage_calculated = wattage_calculated_a + wattage_calculated_b + heating
-	print "Calculated wattage: %r WATTS" % wattage_calculated
+	print("Calculated wattage: %r WATTS" % wattage_calculated)
 	return wattage_calculated
 	
 def base_ampacity(volts, phases, watts):
@@ -121,7 +121,7 @@ def base_ampacity(volts, phases, watts):
 		base_amp = round(watts / (math.sqrt(3) * volts), 1)
 	else:
 		base_amp = round((watts / volts), 1)
-	print base_amp
+	print(base_amp)
 	return base_amp
 	
 def min_ampacity(equip_type, wiring_style, x_base_amps):
@@ -134,7 +134,7 @@ def min_ampacity(equip_type, wiring_style, x_base_amps):
 		min_amp_amount = round(x_base_amps / 0.70, 1)
 	else:
 		min_amp_amount = round(x_base_amps / 0.80, 1)
-	print "Minimun circuit ampacity based on wiring method: %r A" % min_amp_amount
+	print("Minimun circuit ampacity based on wiring method: %r A" % min_amp_amount)
 	return min_amp_amount
 	
 
@@ -144,14 +144,14 @@ rest_of_area_demand(total_meter_squared, class_meter_squared)
 heat = space_heat_demand(heat_amount)
 check_parking()
 other_loads()
-print sub
+print(sub)
 watt_sub = subtotal()
 watts_per = per_square_meter(watt_sub, total_meter_squared)
 base_watt = calculated_wattage(watts_per, total_meter_squared, heat)
 calculated_amp = base_ampacity(panel_voltage, panel_phase, base_watt)
 final_ampacity = min_ampacity(equipment, wiring_method, calculated_amp)
 parallel_ampacity = round(final_ampacity / parallel_count, 1)
-print "Therefore I need a conductor good for %r Amps while running %r parallel runs, for a main ampacity of %r Amps" % (parallel_ampacity, parallel_count, final_ampacity)
+print("Therefore I need a conductor good for %r Amps while running %r parallel runs, for a main ampacity of %r Amps" % (parallel_ampacity, parallel_count, final_ampacity))
 
 end = time.time() - start
-print "Time for calculations: %r" % end
+print("Time for calculations: %r" % end)
