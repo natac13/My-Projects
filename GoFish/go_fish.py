@@ -26,7 +26,7 @@ def draw_card(n, deck):
             card = random.choice(deck)
         except IndexError:
             print("No cards, left in deck")
-            return None
+            return []
         else:
             deck.remove(card)
             new_cards.append(card)
@@ -58,7 +58,8 @@ def transfer_cards(cardvalue, hand):
     
     return: list of card(s)(tuples) which are removed from the hand
     '''
-    
+    if cardvalue in 'ajqk':
+        cardvalue = cardvalue.upper()
     return [card for card in hand if card[0] == cardvalue]
     
 def update_hand(cardvalue, hand):
@@ -68,6 +69,8 @@ def update_hand(cardvalue, hand):
     
     return: list of card(s)(tuples) where transffered card are removed
     '''
+    if cardvalue in 'ajqk':
+        cardvalue = cardvalue.upper()
     return [card for card in hand if card[0] != cardvalue]
     
     
@@ -81,6 +84,8 @@ def computer_ask(comp_hand, user_hand, deck):
     '''
     
     do_you_have = random.choice(comp_hand)
+    print("COMPUTER TURN...")
+    time.sleep(1)
     print("Do you have any {0}'s?".format(do_you_have[0]))
     user_answer = input('Y or N? ')
     print("Checking.....")
@@ -146,17 +151,27 @@ def playGame():
     userHand = draw_card(9, main_deck)
     user_turn = True
     compBookTotal, userBookTotal = 0, 0
-    print("USER HAND: {0}".format(userHand))
+
     
-    while len(main_deck) > 0 or len(compHand) > 0 or len(userHand) > 0:
+    
+    while (compBookTotal+userBookTotal) != 13:
         
         while user_turn:
             if len(userHand) == 0:
                 userHand += draw_card(1, main_deck)
+            if len(compHand) == 0:
+                compHand += draw_card(1, main_deck)
+            print("\nUSER HAND: {0}\n".format(userHand))
+            #print("COMP HAND", compHand) #test######################
             to_ask_comp = input(prompt)
+            print("Checking...")
+            time.sleep(2)
             if not card_in_hand(to_ask_comp, userHand):
                 print("Nice try that card is not even in your hand")
                 user_turn = False
+                print("Drawing a card for user hand.")
+                time.sleep(1)
+                userHand += draw_card(1, main_deck)
                 break
             elif card_in_hand(to_ask_comp, compHand) and card_in_hand(
                                                         to_ask_comp, userHand):
@@ -166,28 +181,42 @@ def playGame():
                 time.sleep(1)
                 userHand += transfer_cards(to_ask_comp, compHand)
                 compHand = update_hand(to_ask_comp, compHand)
-                print("USER HAND: {0}".format(userHand))
                 break
             else:
                 print("Computer didn't have any {0}'s.".format(to_ask_comp))
                 print("Drawing a card for user hand.")
+                time.sleep(1)
                 userHand += draw_card(1, main_deck)
-                print("USER HAND: {0}".format(userHand))
+                print("\nUSER HAND: {0}\n".format(userHand))
                 user_turn = False
             
         while not user_turn:
             if len(compHand) == 0:
                 compHand += draw_card(1, main_deck)
+            if len(userHand) == 0:
+                userHand += draw_card(1, main_deck)
             temp_hand = userHand[:]
+            #print("COMP HAND", compHand) #test######################
+            print("\nUSER HAND: {0}\n".format(userHand))
             compHand, userHand = computer_ask(compHand, userHand, main_deck)
-            print("USER HAND: {0}".format(userHand))
+            #print("COMP HAND", compHand) #test######################
             # If the computer fails to find userHand won't change
             if len(temp_hand) == len(userHand):
                 user_turn = True
                 break
+            else:
+                print("\nUSER HAND: {0}\n".format(userHand))
+                break
             
         compHand, userHand, compBookTotal, userBookTotal = book_keeping(
                             compHand, userHand, compBookTotal, userBookTotal)
+                            
+    print("All books have been completed, let's see who won.")
+    time.sleep(1)
+    if userBookTotal > compBookTotal:
+        print("Congratulation you have won Natac's Go Fish game")
+    else:
+        print("Looks like the computer beat you this time.... wamp wamp")
                 
             
                 

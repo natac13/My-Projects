@@ -53,5 +53,14 @@ totals. *The way I got rid of the books I think is a bit clever since I just
 use my update_hand() function which returns a new list of tuples without the 
 cards of the giving value present
 
+###############     Finished playgame() function!!!   #############
+
+Things were a little crazy with regards to making sure the hands were being 
+updated correctly as well as the overall flow of the game... Probably not the
+best way to structure the game. However, it does work currently and in time I 
+hope to better understand the use of classes, which I think would help make the
+control flow of this game more efficient. But a success none the less at the 
+moment!
+
 
 
