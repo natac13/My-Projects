@@ -125,6 +125,81 @@ def book_keeping(comp_hand, user_hand, comp_bookT, user_bookT):
     return (comp_hand, user_hand, comp_bookT, user_bookT)
     
     
+def playGame():
+    '''
+    Control flow of game and set up the compHand and userHand variables,
+    as well as compBookTotal and userBookTotal 
+
+    will end when there are no cards left in the deck or in either hand and all 
+    books have been made. Player with more books wins
+    '''
+    
+    print("Welcome to Natac's Go Fish game!\n To win you need to collect more " 
+        "books, full sets then the computer.")
+    print("When prompted, input a card value, that appears in your hand to see "
+        "if you can snatch some from the computer, if not you will draw a card")
+    time.sleep(3)
+    
+    prompt = "TO ASK>>>>>  "
+    main_deck = make_deck()
+    compHand = draw_card(9, main_deck)
+    userHand = draw_card(9, main_deck)
+    user_turn = True
+    compBookTotal, userBookTotal = 0, 0
+    print("USER HAND: {0}".format(userHand))
+    
+    while len(main_deck) > 0 or len(compHand) > 0 or len(userHand) > 0:
+        
+        while user_turn:
+            if len(userHand) == 0:
+                userHand += draw_card(1, main_deck)
+            to_ask_comp = input(prompt)
+            if not card_in_hand(to_ask_comp, userHand):
+                print("Nice try that card is not even in your hand")
+                user_turn = False
+                break
+            elif card_in_hand(to_ask_comp, compHand) and card_in_hand(
+                                                        to_ask_comp, userHand):
+                print("Looks like the computer has some {0}'s.".format(
+                                                                   to_ask_comp))
+                print("Transferring cards to your hand now")
+                time.sleep(1)
+                userHand += transfer_cards(to_ask_comp, compHand)
+                compHand = update_hand(to_ask_comp, compHand)
+                print("USER HAND: {0}".format(userHand))
+                break
+            else:
+                print("Computer didn't have any {0}'s.".format(to_ask_comp))
+                print("Drawing a card for user hand.")
+                userHand += draw_card(1, main_deck)
+                print("USER HAND: {0}".format(userHand))
+                user_turn = False
+            
+        while not user_turn:
+            if len(compHand) == 0:
+                compHand += draw_card(1, main_deck)
+            temp_hand = userHand[:]
+            compHand, userHand = computer_ask(compHand, userHand, main_deck)
+            print("USER HAND: {0}".format(userHand))
+            # If the computer fails to find userHand won't change
+            if len(temp_hand) == len(userHand):
+                user_turn = True
+                break
+            
+        compHand, userHand, compBookTotal, userBookTotal = book_keeping(
+                            compHand, userHand, compBookTotal, userBookTotal)
+                
+            
+                
+                
+                
+                
+if __name__ == '__main__':
+    playGame()
+            
+    
+    
+    
         
     
     
