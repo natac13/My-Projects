@@ -44,5 +44,14 @@ variables to total the score, and the reason that got me typing this reminder is
 to unpack the tuple return from computer_ask() so that the "main" computer hand 
 and user hand are reassign outside the function!
 
+book_keeping() function done. And all I can say is it took a fair bit of time to 
+come up with the simple test of using my transfer_cards() to make generate a 
+list that I check if the length match 4 which means the player has a complete 
+book. I decided to automate the whole process for both user and computer.
+I will call this function after each round to update both hand and then the book
+totals. *The way I got rid of the books I think is a bit clever since I just 
+use my update_hand() function which returns a new list of tuples without the 
+cards of the giving value present
+
 
 
