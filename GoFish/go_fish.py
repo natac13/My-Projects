@@ -98,18 +98,17 @@ def computer_ask(comp_hand, user_hand, deck):
         comp_hand += draw_card(1, deck)
         return(comp_hand, user_hand)
         
-def book_keeping(comp_hand, user_hand, comp_bookT=None, user_bookT=None):
+def book_keeping(comp_hand, user_hand, comp_bookT, user_bookT):
     '''
     comp_hand, user_hand: are list of tuples. These represent cards.
     comp_books, user_books: are integers that are a total of how many books
-    each player has. To start the players have no books therefore create them.
+    each player has
     
     returns: a tuple of 4 elements that will be unpacked,(comp_hand, user_hand,
     comp_books, user_books) then reassign outside function
     '''
     
-    if comp_bookT == None:
-        comp_bookT, user_bookT = 0, 0
+    
     for card in comp_hand:
         if len(transfer_cards(card[0], comp_hand)) == 4:
             # by not calling transfer_cards they will simple not appear in the 
