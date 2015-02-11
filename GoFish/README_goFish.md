@@ -31,5 +31,18 @@ not pick up on the appended cards.
 The update_hand() just returns a new hand with the cards that were transferred 
 removed, or just not being creating in the new hand(list)
 
+Making the computer_ask() function I wanted to make it a completely isolated 
+event, that would have the computer randomly pick a card ask user if they have 
+said card? Not that the user response matters since I verify the card is in hand
+or not then run the trnsfer_card() and update_hand() functions on the user_hand.
+Afterwards I reassign the user_hand and comp_hand hands then return them in a 
+tuple. I found this is the best way to get to updated variables (the hands) from
+one function.
+** I have to remember that while making the playgame() function later I need to 
+include a deck variable that updates through as well as book collection 
+variables to total the score, and the reason that got me typing this reminder is
+to unpack the tuple return from computer_ask() so that the "main" computer hand 
+and user hand are reassign outside the function!
+
 
 

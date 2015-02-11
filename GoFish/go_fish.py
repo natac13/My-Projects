@@ -3,6 +3,7 @@
 
 import random
 import sys
+import time
 
 suits = ['Spade', 'Heart', 'Club', 'Diamond']
 values = list(map(str, range(2, 11))) + ['A', 'J', 'Q', 'K'] 
@@ -68,4 +69,34 @@ def update_hand(cardvalue, hand):
     return: list of card(s)(tuples) where transffered card are removed
     '''
     return [card for card in hand if card[0] != cardvalue]
+    
+    
+def computer_ask(comp_hand, user_hand, deck):
+    '''
+    Take the comp hand and will ask user if they have one of the card value
+    Random for some strategy
+    
+    return: tuple of a new comp hand and new user hand to unpack outside 
+    function
+    '''
+    
+    do_you_have = random.choice(comp_hand)
+    print("Do you have any {0}'s?".format(do_you_have[0]))
+    user_answer = input('Y or N? ')
+    print("Checking.....")
+    time.sleep(2)
+    if card_in_hand(do_you_have[0], user_hand):
+        print("Yep, you do have some {0}'s, so I will transfer those"
+                " for you.".format(do_you_have[0]))
+        xfer_cards = transfer_cards(do_you_have[0], user_hand)
+        user_hand = update_hand(do_you_have[0], user_hand)
+        comp_hand += xfer_cards
+        return(comp_hand, user_hand)
+    else:
+        print('You do not have that card in your hand, computer draws a card.')
+        time.sleep(1)
+        comp_hand += draw_card(1, deck)
+        return(comp_hand, user_hand)
+        
+    
     
