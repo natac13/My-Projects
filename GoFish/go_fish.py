@@ -11,10 +11,10 @@ values = list(map(str, range(2, 11))) + ['A', 'J', 'Q', 'K']
 def make_deck():
     '''Generate list of tuples, which are the card of a deck'''
     deck = [(rank, suit) for rank in values for suit in suits]
-    random.shuffle(deck)
+    random.shuffle(deck) # does not return anything....
     return deck
     
-def draw_card(n, deck):
+def draw_card(deck):
     ''' 
     n: an integer which is how many card to draw from the deck, usually 1
     deck: is a non-empty list of tuples when n is 9
@@ -23,20 +23,15 @@ def draw_card(n, deck):
     will return none is the deck is empty
     '''
     new_cards = []
-    if n == 1:
-        try:
-            card = random.choice(deck)
-        except IndexError:
-            print("No cards, left in deck")
-            return []
-        else:
-            deck.remove(card)
-            new_cards.append(card)
-    if n == 9:
-        for i in range(n):
-            card = random.choice(deck)
-            new_cards.append(card)
-            deck.remove(card)
+    
+    try:
+        card = deck.pop(0) # no need to del since pop() removes element as well
+    except IndexError:
+        print("No cards, left in deck")
+        return []
+    else:
+        new_cards.append(card)
+    
     return new_cards
     
 def card_in_hand(v, hand):
@@ -102,7 +97,7 @@ def computer_ask(comp_hand, user_hand, deck):
     else:
         print('Bad guess by the computer, computer draws a card.')
         time.sleep(1)
-        comp_hand += draw_card(1, deck)
+        comp_hand += draw_card(deck)
         return(comp_hand, user_hand)
         
 def book_keeping(comp_hand, user_hand, comp_bookT, user_bookT):
@@ -151,8 +146,8 @@ def playGame():
     main_deck = make_deck()
     compHand, userHand = [], []
     for i in range(9):
-        compHand += draw_card(1, main_deck)
-        userHand += draw_card(1, main_deck)
+        compHand += draw_card(main_deck)
+        userHand += draw_card(main_deck)
     user_turn = True
     compBookTotal, userBookTotal = 0, 0
 
@@ -162,9 +157,9 @@ def playGame():
         
         while user_turn:
             if len(userHand) == 0:
-                userHand += draw_card(1, main_deck)
+                userHand += draw_card(main_deck)
             if len(compHand) == 0:
-                compHand += draw_card(1, main_deck)
+                compHand += draw_card(main_deck)
             print("\nUSER HAND: {0}\n".format(userHand))
             #print("COMP HAND", compHand) #test######################
             to_ask_comp = input(prompt)
@@ -175,7 +170,7 @@ def playGame():
                 user_turn = False
                 print("Drawing a card for user hand.")
                 time.sleep(1)
-                userHand += draw_card(1, main_deck)
+                userHand += draw_card(main_deck)
                 break
             elif card_in_hand(to_ask_comp, compHand) and card_in_hand(
                                                         to_ask_comp, userHand):
@@ -190,15 +185,15 @@ def playGame():
                 print("Computer didn't have any {0}'s.".format(to_ask_comp))
                 print("Drawing a card for user hand.")
                 time.sleep(1)
-                userHand += draw_card(1, main_deck)
+                userHand += draw_card(main_deck)
                 print("\nUSER HAND: {0}\n".format(userHand))
                 user_turn = False
             
         while not user_turn:
             if len(compHand) == 0:
-                compHand += draw_card(1, main_deck)
+                compHand += draw_card(main_deck)
             if len(userHand) == 0:
-                userHand += draw_card(1, main_deck)
+                userHand += draw_card(main_deck)
             temp_hand = userHand[:]
             #print("COMP HAND", compHand) #test######################
             print("\nUSER HAND: {0}\n".format(userHand))
