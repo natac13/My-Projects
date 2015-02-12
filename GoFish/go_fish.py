@@ -10,7 +10,9 @@ values = list(map(str, range(2, 11))) + ['A', 'J', 'Q', 'K']
 
 def make_deck():
     '''Generate list of tuples, which are the card of a deck'''
-    return [(rank, suit) for rank in values for suit in suits]
+    deck = [(rank, suit) for rank in values for suit in suits]
+    random.shuffle(deck)
+    return deck
     
 def draw_card(n, deck):
     ''' 
@@ -147,8 +149,10 @@ def playGame():
     
     prompt = "TO ASK>>>>>  "
     main_deck = make_deck()
-    compHand = draw_card(9, main_deck)
-    userHand = draw_card(9, main_deck)
+    compHand, userHand = [], []
+    for i in range(9):
+        compHand += draw_card(1, main_deck)
+        userHand += draw_card(1, main_deck)
     user_turn = True
     compBookTotal, userBookTotal = 0, 0
 
