@@ -5,9 +5,13 @@ values = list(range(2, 11)) + ['A', 'J', 'Q', 'K']
 
 def make_deck():
     '''Generate list of tuples, which are the card of a deck'''
-    deck = [(rank, suit) for rank in values for suit in suits] * 4
+    deck = [(rank, suit) for rank in values for suit in suits] * 8
     random.shuffle(deck) # does not return anything....
-    return deck
+    yellow_card = random.randrange(20, 71)
+    # I wonder if there is a difference in time?
+    #yellow_card = random.randrange(345, 395)
+    #return deck[:yellow_card]
+    return deck[:-yellow_card]
     
 def draw_card(deck):
     ''' 
