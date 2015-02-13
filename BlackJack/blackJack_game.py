@@ -41,7 +41,7 @@ def draw_card(deck):
 def handCal(Hand):
     '''
     Hand is a list of tuples, which have mostly (int, str) groupings, however, 
-    for (str, str) the try block handles this caes.
+    for (str, str) the try block handles this case.
     aces start as a value of 1, (only ever use 1 ace as 11 in a hand)
     
     return: an integer that is the total value of the hand.    
@@ -64,4 +64,29 @@ def handCal(Hand):
         else:
             return total - 10
     return total ### this is if no ace
+    
+def have_BJ(hand):
+    '''
+    hand: list of tuples, first element of tuple is value of card
+    
+    returns: True if user hand equal 21 with only 2 cards
+    '''
+    return (handCal(hand) == 21 and len(hand) == 2)
+
+def player_bust(player_hand):
+    '''
+    returns: True if player hand is over 21
+    '''
+    return (handCal(player_hand) > 21)
+    
+def dealer_win(dealer_hand, player_hand):
+    '''
+    display info when dealer wins
+    '''
+    print("Sorry you lose...")
+    print("Dealer Hand >> {0} : value {1}".format(dealer_hand, 
+                                                    handCal(dealer_hand)))
+    print("Player Hand >> {0} : value {1}".format(player_hand, 
+                                                    handCal(player_hand)))
+
     
