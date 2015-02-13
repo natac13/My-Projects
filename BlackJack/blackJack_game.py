@@ -1,6 +1,6 @@
 # BlackJack Game
 # By: Natac
-# Rules of choice are in README_blackjack.md
+# Rules of choice are in rules_blackjack.txt
 # Feb 13, 2015
 
 import random
@@ -28,7 +28,7 @@ def draw_card(deck):
     '''
     new_cards = []
     try:
-        card = deck.pop(0) # no need to del since pop() removes element as well
+        card = deck.pop(0)
     except IndexError:
         print("No cards, left in deck")
         return new_cards # empty list 
