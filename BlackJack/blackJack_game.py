@@ -34,7 +34,6 @@ def draw_card(deck):
         return new_cards # empty list 
     else:
         new_cards.append(card)
-    
     return new_cards
 
 
@@ -73,25 +72,19 @@ def have_BJ(hand):
     '''
     return (handCal(hand) == 21 and len(hand) == 2)
 
-def player_bust(player_hand):
-    '''
-    returns: True if player hand is over 21
-    '''
-    return (handCal(player_hand) > 21)
+def bust(hand):
+    '''returns: True if given hand is over 21'''
+    return (handCal(hand) > 21)
     
 def dealer_win(dealer_hand, player_hand):
-    '''
-    display info when dealer wins
-    '''
-    print("Sorry you lose...")
+    '''Display info when dealer wins'''
+    print("\nSorry you lose...")
     print("Dealer Hand >> {0} : {1}".format(handCal(dealer_hand), dealer_hand))
     print("Player Hand >> {0} : {1}".format(handCal(player_hand), player_hand))
                                                    
 def player_win(dealer_hand, player_hand):
-    '''
-    display info when player wins
-    '''
-    print("YOU WIN!!!")
+    '''Display info when player wins'''
+    print("\nYOU WIN!!!")
     print("Dealer Hand >> {0} : {1}".format(handCal(dealer_hand), dealer_hand))
     print("Player Hand >> {0} : {1}".format(handCal(player_hand), player_hand))
     
