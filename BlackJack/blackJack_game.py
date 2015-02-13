@@ -84,9 +84,27 @@ def dealer_win(dealer_hand, player_hand):
     display info when dealer wins
     '''
     print("Sorry you lose...")
-    print("Dealer Hand >> {0} : value {1}".format(dealer_hand, 
-                                                    handCal(dealer_hand)))
-    print("Player Hand >> {0} : value {1}".format(player_hand, 
-                                                    handCal(player_hand)))
-
+    print("Dealer Hand >> {0} : {1}".format(handCal(dealer_hand), dealer_hand))
+    print("Player Hand >> {0} : {1}".format(handCal(player_hand), player_hand))
+                                                   
+def player_win(dealer_hand, player_hand):
+    '''
+    display info when player wins
+    '''
+    print("YOU WIN!!!")
+    print("Dealer Hand >> {0} : {1}".format(handCal(dealer_hand), dealer_hand))
+    print("Player Hand >> {0} : {1}".format(handCal(player_hand), player_hand))
     
+def deal_cards(shoe):
+    '''
+    shoe: big list of tuples, representing the shoe being played
+    
+    returns: 2 list of tuples, which represent cards... in a tuple
+    first element: dealer_hand
+    second element: player_hand
+    '''
+    dealer_hand, player_hand = [], []
+    for i in range(2):
+        dealer_hand += draw_card(shoe)
+        player_hand += draw_card(shoe)
+    return (dealer_hand, player_hand)

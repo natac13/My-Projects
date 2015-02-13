@@ -28,3 +28,6 @@ So far the game is working I need to find a way to turn the 3 nested if
 statements about the comphand being smaller then 17, into a while loop somehow.
 Taking a break though right now.
 
+Have made a bunch of functions out of events that were repeating in the test code.
+I did this since the test code is very close to the way I will implement the 
+playgame() function. 
