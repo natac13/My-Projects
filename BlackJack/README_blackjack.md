@@ -24,9 +24,9 @@ any faster. Not that I think it matters since it will only happen once, at the
 start of the game.
 
 
-So far the game is working I need to find a way to turn the 3 nested if 
+*******So far the game is working I need to find a way to turn the 3 nested if 
 statements about the comphand being smaller then 17, into a while loop somehow.
-Taking a break though right now.
+Taking a break though right now.*********WORK IN PROGRESS*************
 
 Have made a bunch of functions out of events that were repeating in the test code.
 I did this since the test code is very close to the way I will implement the 
