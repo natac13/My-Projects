@@ -22,3 +22,9 @@ I did change it to a randrange(20, 71) which is 5-17% of 416 and then get the
 deck from beginning to the end minus the yellow_card. I wonder if this makes it 
 any faster. Not that I think it matters since it will only happen once, at the 
 start of the game.
+
+
+So far the game is working I need to find a way to turn the 3 nested if 
+statements about the comphand being smaller then 17, into a while loop somehow.
+Taking a break though right now.
+
