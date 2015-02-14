@@ -41,4 +41,15 @@ am lost on how to make it work with my current structure.
 call the playgame() recursively with splitting my list of tuples (The hand),
 but then I am not sure how to evaluate the 2+ hands after the dealer turn.
 
+#### Abstraction
+>I have turned the played turn from mine test scripts into a function. This may 
+**not** be the best solution since I do not think I can deal with the user 
+wanting to split. THe function player_turn returns the player_hand so I may 
+compare it to the dealers later. But I am **LOST** on how to deal with a possible
+of multi-hands for the user to control.
+
+>The display outputs have also been put inot functions since I think when I do 
+implement the playgame() it will be easier to read and therefore work through.
+
+
 
