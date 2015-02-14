@@ -40,6 +40,10 @@ am lost on how to make it work with my current structure.
 >First thought was to use a playerturn function and if the user splits the to 
 call the playgame() recursively with splitting my list of tuples (The hand),
 but then I am not sure how to evaluate the 2+ hands after the dealer turn.
+>New thought about having the dealer hit on soft 17... I cannot seem to figure
+this part out at the moment, maybe I need to create a new handCal() function
+for the dealer to account for this. *Going to think on this one since game is in
+a working condition to see if I cannot just use the functions I have currently*
 
 #### Abstraction
 >I have turned the played turn from mine test scripts into a function. This may 
@@ -48,8 +52,15 @@ wanting to split. THe function player_turn returns the player_hand so I may
 compare it to the dealers later. But I am **LOST** on how to deal with a possible
 of multi-hands for the user to control.
 
->The display outputs have also been put inot functions since I think when I do 
+>The display outputs have also been put into functions since I think when I do 
 implement the playgame() it will be easier to read and therefore work through.
 
+
+#### playGame()
+I have got my first version of playGame() implemented. No success on being able
+to split. I thought of just added it to the original hand then evaluate only 
+parts against the dealer hand but again I do not think this will work.
+
+*Next step is to add in the betting aspect of the game*
 
 
