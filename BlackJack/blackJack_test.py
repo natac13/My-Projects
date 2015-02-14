@@ -40,7 +40,7 @@ while len(main_deck) > 0:
             break # To start a whole new hand no need for dealer to proceed
             
             
-        playerTurn(userHand, main_deck)# this didnt require reassingment
+        playerTurn(userHand, main_deck)# this didnt require reassignment
         
         if bust(userHand):
             dealer_win(compHand, userHand)
