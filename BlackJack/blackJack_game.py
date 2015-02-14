@@ -4,6 +4,7 @@
 # Feb 13, 2015
 
 import random
+import time
 
 suits = ['Spade', 'Heart', 'Club', 'Diamond']
 values = list(range(2, 11)) + ['A', 'J', 'Q', 'K'] 
@@ -88,6 +89,12 @@ def player_win(dealer_hand, player_hand):
     print("Dealer Hand >> {0} : {1}".format(handCal(dealer_hand), dealer_hand))
     print("Player Hand >> {0} : {1}".format(handCal(player_hand), player_hand))
     
+def push(dealer_hand, player_hand):
+    '''Display info for push event'''
+    print("\nHAND IS A PUSH...")
+    print("Dealer Hand >> {0} : {1}".format(handCal(dealer_hand), dealer_hand))
+    print("Player Hand >> {0} : {1}".format(handCal(player_hand), player_hand))
+    
 def deal_cards(shoe):
     '''
     shoe: big list of tuples, representing the shoe being played
@@ -101,3 +108,56 @@ def deal_cards(shoe):
         dealer_hand += draw_card(shoe)
         player_hand += draw_card(shoe)
     return (dealer_hand, player_hand)
+    
+def split(player_hand, deck):
+    '''
+    take player_hand and splits into 2 different hands, draw_card() for each
+    returns: 2 player hands each a list of 2 tuples    
+    '''
+    right = player_hand[0]
+    right += draw_card(deck)
+    left = player_hand[1] 
+    left += draw_card(deck)
+    return (left, right)
+        
+        
+def playerTurn(player_hand, deck):
+    '''
+    player_hand: list of tuples, represent the cards from the deck
+    deck: is the main deck which is always getting modified
+    
+    returns: the player hand when they stand or the hand is greater than 21
+    '''
+    while not bust(player_hand):
+        choice = input("Hit(h), double(d), stand(s)?>>>>>")
+        if choice == 'h':
+            hit_card = draw_card(deck)
+            print("DRAW : {0} >> {1}".format(hit_card, player_hand))
+            player_hand += hit_card
+            print("TOTAL : {0}".format(handCal(player_hand)))
+            time.sleep(1)
+        elif choice == 'd':
+            hit_card = draw_card(deck)
+            print("DRAW : {0} >> {1}".format(hit_card, player_hand))
+            player_hand += hit_card
+            print("TOTAL : {0}".format(handCal(player_hand)))
+            time.sleep(1)
+            return player_hand # not able to draw anymore
+        # elif choice == 'split':
+            # try:
+                # if player_hand[0] != player_hand[1]:
+                    # raise ValueError
+            # except ValueError:
+                # print("You can't split that hand")
+            # else:
+                # phand1, phand2 = split(player_hand, deck)
+                # playerTurn(phand1, deck)
+                # playerTurn(phand2, deck)
+                # ##run split function##
+                # # run to version of playerTurn one with the first card form 
+                # # old hand other with second card
+                # # remember to draw_card
+        else:
+            return player_hand # when stand
+    return player_hand   # when hand over 21
+
