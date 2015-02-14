@@ -43,7 +43,7 @@ but then I am not sure how to evaluate the 2+ hands after the dealer turn.
 >New thought about having the dealer hit on soft 17... I cannot seem to figure
 this part out at the moment, maybe I need to create a new handCal() function
 for the dealer to account for this. *Going to think on this one since game is in
-a working coniditon to see if I cannot just use the functions I have
+a working condition to see if I cannot just use the functions I have currently*
 
 #### Abstraction
 >I have turned the played turn from mine test scripts into a function. This may 
