@@ -121,30 +121,36 @@ def split(player_hand, deck):
     return left + right
         
         
-def playerTurn(player_hand, deck, dealer_hand):
+def playerTurn(player_hand, deck, dealer_hand, bet):
     '''
     player_hand: list of tuples, represent the cards from the deck
     deck: is the main deck which is always getting modified
+    dealer_hand passed in to reveal one card to the player
     
-    returns: the player hand when they stand or the hand is greater than 21
+    returns: the player hand when they stand or the hand is greater than 21, and
+    the players bet in a tuple to unpack outside function
     '''
+    
     while not bust(player_hand):
-        print('Your hand = {0} : {1}'.format(handCal(player_hand), player_hand))
+        if player_hand == 21:
+            return (player_hand, bet)
+        print('\nYour hand = {0} : {1}'.format(handCal(player_hand), player_hand))
         print('Dealer showing... {0}'.format(dealer_hand[0]))
-        choice = input("Hit(h), Double(d), Stand(s)??  ")
+        choice = input("\nHit(h), Double(d), Stand(s)??  ")
         if choice == 'h':
             hit_card = draw_card(deck)
-            print("DRAW : {0} >> {1}".format(hit_card, player_hand))
+            print("\nDRAW : {0} >> {1}".format(hit_card, player_hand))
             player_hand += hit_card
             print("TOTAL : {0}".format(handCal(player_hand)))
             time.sleep(1)
         elif choice == 'd':
+            bet += bet
             hit_card = draw_card(deck)
-            print("DRAW : {0} >> {1}".format(hit_card, player_hand))
+            print("\nDRAW : {0} >> {1}".format(hit_card, player_hand))
             player_hand += hit_card
             print("TOTAL : {0}".format(handCal(player_hand)))
             time.sleep(1)
-            return player_hand # not able to draw anymore
+            return (player_hand, bet)# not able to draw anymore
         # elif choice == 'split':
             # try:
                 # if player_hand[0] != player_hand[1]:
@@ -159,45 +165,69 @@ def playerTurn(player_hand, deck, dealer_hand):
                 # # old hand other with second card
                 # # remember to draw_card
         else:
-            return player_hand # when stand
-    return player_hand   # when hand over 21 meaning bust() returns True
+            return (player_hand, bet) # when stand
+    return (player_hand, bet)   # when hand over 21 meaning bust() returns True
     
 def playGame():
     deck = make_shoe()
+    money = float(input("CASH???   "))
+    print("Start with ${0:.2f}".format(money))
+    time.sleep(2)
     
-    while len(deck) > 0:
+    while len(deck) > 0 and money > 0:
+    
         dealer_hand, user_hand = deal_cards(deck)
-        input("\nDeal hand?? ")
+        bet = 0.0
+        print('\nYou currently have ${0:.2f}'.format(money))
+        while bet < 15.0 or bet > 500.0:
+            bet = float(input("\nBet Amount... min $15 - max $500>> "))
+            if bet > money:
+                bet = 0.0
+                print("You do not have enough money")
+        
         player_control = True
         
         while player_control:
-            # print('Your hand = {0} : {1}'.format(handCal(user_hand), user_hand))
-            # print('Dealer showing... {0}'.format(dealer_hand[0]))
+              
             if have_BJ(user_hand) and str(dealer_hand[0][0]) == "A":
-                ins = input("INSURANCE??? y or n : ") # for betting later
-                player_control = False 
-                break # goes to dealer turn at this point
+                print('Your hand = {0} : {1}'.format(handCal(user_hand), user_hand))
+                print('Dealer showing... {0}'.format(dealer_hand[0]))
+                even_money = input("Even money??? y or n : ") 
+                if even_money == 'y':
+                    money += bet # take even money and end round
+                    break
+                else:
+                    player_control = False 
+                    break # goes to dealer turn at this point
             elif have_BJ(user_hand) and str(dealer_hand[0][0]) in "10JQK": 
+                print('\nYour hand = {0} : {1}'.format(handCal(user_hand), user_hand))
+                print('Dealer showing... {0}'.format(dealer_hand[0]))
                 print("\nCHECKING FOR BLACKJACK....")
                 time.sleep(2)
                 if handCal(dealer_hand) == 21:
+                    # money += bet # get back bet 
                     push(dealer_hand, user_hand)
                     time.sleep(1)
                     break # To start new round
                 else:
                     if handCal(dealer_hand) < handCal(user_hand):
+                        money += (bet*1.5) # blackJack pays 3:2
+                        print("\nBLACKJACK")
                         player_win(dealer_hand, user_hand)
                         time.sleep(1)
                         break # To start new round
             elif have_BJ(user_hand):
+                money += (bet*1.5) 
+                print("\nBLACKJACK")
                 player_win(dealer_hand, user_hand)
                 time.sleep(2)
                 break # To start new round
             # where user takes control of game
-            # returns the user_hand without having to reassign  
-            playerTurn(user_hand, deck, dealer_hand)
+            # returns the user_hand and bet for reassignment
+            user_hand, bet = playerTurn(user_hand, deck, dealer_hand, bet)
             if bust(user_hand):
                 dealer_win(dealer_hand, user_hand)
+                money -= bet
                 break # To start new round
             player_control = False
         
@@ -211,19 +241,24 @@ def playGame():
                 time.sleep(1)
             if bust(dealer_hand):
                 player_win(dealer_hand, user_hand)
+                money += bet
                 break
             else:
                 if handCal(dealer_hand) > handCal(user_hand):
                     dealer_win(dealer_hand, user_hand)
+                    money -= bet
                     break
                 elif handCal(dealer_hand) == handCal(user_hand):
                     push(dealer_hand, user_hand)
+                    # money += bet
                     break
                 else:
                     player_win(dealer_hand, user_hand)
+                    money += bet
                     break           
             player_control = True
-            
+    print("\nThank you for playing you finish with a total of ${0:.2f}" \
+                                                                .format(money))        
 if __name__ == '__main__':
     print("Welcome to Natac's BlackJack game")
     playGame()
