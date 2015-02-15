@@ -37,9 +37,11 @@ playgame() function.
 ####Issue
 >trying to determine how to deal with when the user wants to split the hand. I 
 am lost on how to make it work with my current structure. 
+
 >First thought was to use a playerturn function and if the user splits the to 
 call the playgame() recursively with splitting my list of tuples (The hand),
 but then I am not sure how to evaluate the 2+ hands after the dealer turn.
+
 >New thought about having the dealer hit on soft 17... I cannot seem to figure
 this part out at the moment, maybe I need to create a new handCal() function
 for the dealer to account for this. *Going to think on this one since game is in
@@ -61,6 +63,17 @@ I have got my first version of playGame() implemented. No success on being able
 to split. I thought of just added it to the original hand then evaluate only 
 parts against the dealer hand but again I do not think this will work.
 
-*Next step is to add in the betting aspect of the game*
+#### Betting now in game
+I have got the betting part of the main game done. User gets to put in a amount
+they are bring to the table. Then bets between $15-$500. I had to modify my
+player_turn() function to include the bet amount so that if user chooses to 
+double that get reflected. I reassign the value of user_hand and the bet amount 
+to equal the player_turn() function which now returns a "tuple(user_hand, bet)"
+
+*Still kicking myself since I cannot figure out the splitting hand part*
+*and nowhere on the soft 17 part either*
+
+Given this game a break until I have more knowledge to complete it to include; 
+splitting and such
 
 
