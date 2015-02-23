@@ -5,6 +5,7 @@
 
 import random
 import time
+import argparse
 
 suits = ['Spade', 'Heart', 'Club', 'Diamond']
 values = list(range(2, 11)) + ['A', 'J', 'Q', 'K'] 
@@ -170,27 +171,34 @@ def playerTurn(player_hand, deck, dealer_hand, bet):
     
 def playGame():
     deck = make_shoe()
-    money = float(input("CASH???   "))
-    print("Start with ${0:.2f}".format(money))
+#####    This is the class object part I made   #####
+    money = parser.get_money()
+    name = parser.get_name()
+    print("Welcome to Natac's BlackJack game, {0}".format(name))
+    print("Your are starting with ${0:.2f}".format(money))
+    print("Hope you enjoy playing {0}".format(name))
+    print('Ctrl+C to exit the game at anytime')
     time.sleep(2)
     
     while len(deck) > 0 and money > 0:
     
         dealer_hand, user_hand = deal_cards(deck)
         bet = 0.0
-        print('\nYou currently have ${0:.2f}'.format(money))
+        print('\n{0} currently have ${1:.2f}'.format(name, money))
+        
         while bet < 15.0 or bet > 500.0:
             bet = float(input("\nBet Amount... min $15 - max $500>> "))
             if bet > money:
                 bet = 0.0
-                print("You do not have enough money")
+                print("Sorry {0}, you do not have enough money".format(name))
         
         player_control = True
         
         while player_control:
               
             if have_BJ(user_hand) and str(dealer_hand[0][0]) == "A":
-                print('Your hand = {0} : {1}'.format(handCal(user_hand), user_hand))
+                print('Your hand = {0} : {1}'.format(handCal(user_hand), 
+                      user_hand))
                 print('Dealer showing... {0}'.format(dealer_hand[0]))
                 even_money = input("Even money??? y or n : ") 
                 if even_money == 'y':
@@ -200,7 +208,8 @@ def playGame():
                     player_control = False 
                     break # goes to dealer turn at this point
             elif have_BJ(user_hand) and str(dealer_hand[0][0]) in "10JQK": 
-                print('\nYour hand = {0} : {1}'.format(handCal(user_hand), user_hand))
+                print('\nYour hand = {0} : {1}'.format(handCal(user_hand), 
+                      user_hand))
                 print('Dealer showing... {0}'.format(dealer_hand[0]))
                 print("\nCHECKING FOR BLACKJACK....")
                 time.sleep(2)
@@ -258,8 +267,24 @@ def playGame():
                     break           
             player_control = True
     print("\nThank you for playing you finish with a total of ${0:.2f}" \
-                                                                .format(money))        
+                                                                .format(money))
+
+# Made this a class so it can be accessed by the playgame()
+class Parser:
+    def __init__(self):    
+        self.my_parser = argparse.ArgumentParser()
+        self.my_parser.add_argument("Name", help="Player name")
+        self.my_parser.add_argument("Money", 
+                            help="Amount of money to start BlackJack", type=int)
+                        
+        self.args = self.my_parser.parse_args()
+    def get_name(self):
+        return self.args.Name
+    def get_money(self):
+        return self.args.Money
+    
+
 if __name__ == '__main__':
-    print("Welcome to Natac's BlackJack game")
+    parser = Parser()
     playGame()
 
